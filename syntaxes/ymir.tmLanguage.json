@@ -60,7 +60,7 @@
 		"lambda": {
 			"patterns": [{
 				"name": "keyword.operator.arrow.ymir",
-				"match": "\\b(->|=>)\\b"
+				"match": "(->|=>)"
 			}]
 		},
 		"self": {
@@ -72,8 +72,15 @@
 		"let-statement": {
 			"patterns": [				
 				{
-					"name": "keyword.other.var.ymir",
-					"match": "\\b(var|let|def|pub|with|new)\\b"
+					"match": "\\b((\\b(var|pub|let|def|with|new|mut|imut)\\s+)+)+([a-z0-9A-Z_]+)\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.other.var.ymir"
+						},
+						"4":{
+							"name": "entity.name.variable.field.cs"
+						}
+					}
 				},{
 					"match": "\\b(class)\\s+([a-z0-9A-Z:]+)\\s*",
 					"captures": {
@@ -129,7 +136,7 @@
 			]
 		},
 		"mutability-modifier": {
-			"name": "storage.modifier.ymir",
+			"name": "keyboard.other.var.ymir",
 			"match": "\\b(mut|imut)\\b"
 		},
 		"type-builtin": {

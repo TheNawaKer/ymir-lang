@@ -1,0 +1,25 @@
+{
+    "name": "ymir-lang",
+    "displayName": "Ymir Lang",
+    "description": "Syntax highlighting for Ymir",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.42.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ymir",
+            "aliases": ["Ymir", "ymir"],
+            "extensions": [".yr"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ymir",
+            "scopeName": "source.yr",
+            "path": "./syntaxes/ymir.tmLanguage.json"
+        }]
+    }
+}

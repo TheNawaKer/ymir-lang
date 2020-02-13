@@ -1,0 +1,167 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Ymir",
+	"patterns": [			
+		{
+			"include": "#begin-directive"
+		},	
+		{
+			"include": "#keywords"
+		},	
+		{
+			"include": "#let-statement"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#type-builtin"
+		},
+		{
+			"include": "#template-name"
+		},
+		{
+			"include": "#type-left"
+		}
+	],
+	"repository": {
+		"begin-directive": {
+			"patterns": [{
+				"match": "\\b(mod|import)\\s+([a-z0-9A-Z:]*)\\s*",
+				"captures": {
+					"1": {
+						"name": "keyword.other.using.ymir"
+					},
+					"2":{
+						"patterns": [
+							{
+								"include": "#type-name"
+							}
+						]
+					}
+				}			
+			}]
+		},
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.ymir",
+				"match": "\\b(if|while|for|return|loop|match|extern)\\b"
+			}]
+		},
+		"lambda": {
+			"patterns": [{
+				"name": "variable.parameter",
+				"match": "\\b(->)\\b"
+			}]
+		},
+		"let-statement": {
+			"patterns": [				
+				{
+					"name": "keyword.other.var.ymir",
+					"match": "\\b(var|let|def|pub|with|new)\\b"
+				},{
+					"match": "\\b(class)\\s+([a-z0-9A-Z:]+)\\s*",
+					"captures": {
+						"1": {
+							"name": "keyword.other.var.ymir"
+						},
+						"2":{
+							"patterns": [
+								{
+									"include": "#type-name"
+								}
+							]
+						}
+					}
+				}		
+			]
+		},
+		"type-left":{
+			"match": "([a-zA-Z0-9:!()]+)(?=::)",
+			"captures": {
+				"1": {
+					"patterns": [
+						{
+							"include": "#type-name"
+						}
+					]
+				}
+			}
+		},
+		"strings": {
+			"name": "string.quoted.double.ymir",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.ymir",
+					"match": "\\\\."
+				}
+			]
+		},		
+		"type": {
+			"name": "meta.type.ymir",
+			"patterns": [				
+				{
+					"include": "#mutability-modifier"
+				},
+				{
+					"include": "#type-builtin"
+				},
+				{
+					"include": "#type-name"
+				}
+			]
+		},
+		"mutability-modifier": {
+			"name": "storage.modifier.ymir",
+			"match": "\\b(mut|imut)\\b"
+		},
+		"type-builtin": {
+			"match": "\\b(i8|i16|i32|i64|u8|u16|u32|u64|isize|usize|f32|f64|s8|c8|bool)\\b",
+			"captures": {
+				"1": {
+					"name": "entity.name.type.alias.ymir"
+				}
+			}
+		},
+		"type-name": {
+			"patterns": [	
+				{
+					"match": "\\b([a-z0-9A-Z]+)(((\\:\\:)\\b([a-z0-9A-Z]*))*)",
+					"captures": {
+						"1": {
+							"name": "entity.name.type.alias.ymir"
+						},
+						"2":{
+							"patterns": [
+								{
+									"include": "#type-name"
+								}
+							]
+						}
+					}
+				}			
+			]
+		},
+		"template-name":{
+            "match": "\\b([a-z0-9A-Z]+)(!)(.*?)\\)",
+            "captures": {
+                "1": {
+                    "name": "entity.name.type.alias.ymir"
+                },
+                "2": {
+                    "name": "punctuation.separator.coloncolon.ymir"
+                },
+                "3":{
+                    "patterns": [
+                        {
+                            "include": "#type-name"
+                        }
+                    ]
+                }
+            }
+        }
+	},
+	"scopeName": "source.yr"
+}

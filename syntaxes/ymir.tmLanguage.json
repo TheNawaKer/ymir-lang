@@ -15,6 +15,9 @@
 			"include": "#strings"
 		},
 		{
+			"include": "#comment"
+		},
+		{
 			"include": "#type-builtin"
 		},
 		{
@@ -22,6 +25,12 @@
 		},
 		{
 			"include": "#type-left"
+		},
+		{
+			"include": "#lambda"
+		},
+		{
+			"include": "#self"
 		}
 	],
 	"repository": {
@@ -50,8 +59,14 @@
 		},
 		"lambda": {
 			"patterns": [{
-				"name": "variable.parameter",
-				"match": "\\b(->)\\b"
+				"name": "keyword.operator.arrow.ymir",
+				"match": "\\b(->|=>)\\b"
+			}]
+		},
+		"self": {
+			"patterns": [{
+				"name": "keyword.other.this.ymir",
+				"match": "\\b(self)\\b"
 			}]
 		},
 		"let-statement": {
@@ -161,7 +176,57 @@
                     ]
                 }
             }
-        }
+        },
+		"comment": {
+			"patterns": [
+				{
+					"name": "comment.block.ymir",
+					"begin": "/\\*",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.ymir"
+						}
+					},
+					"end": "\\*/",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.ymir"
+						}
+					}
+				},
+				{
+					"begin": "(^\\s+)?(?=//)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.whitespace.comment.leading.ymir"
+						}
+					},
+					"end": "(?=$)",
+					"patterns": [
+						{
+							"name": "comment.block.documentation.ymir",
+							"begin": "(?<!/)///(?!/)",
+							"beginCaptures": {
+								"0": {
+									"name": "punctuation.definition.comment.ymir"
+								}
+							},
+							"end": "(?=$)"
+						},
+						{
+							"name": "comment.line.double-slash.ymir",
+							"begin": "(?<!/)//(?:(?!/)|(?=//))",
+							"beginCaptures": {
+								"0": {
+									"name": "punctuation.definition.comment.ymir"
+								}
+							},
+							"end": "(?=$)"
+						}
+					]
+				}
+			]
+		}
 	},
 	"scopeName": "source.yr"
 }

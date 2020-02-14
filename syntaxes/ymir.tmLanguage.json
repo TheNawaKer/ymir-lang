@@ -72,13 +72,16 @@
 		"let-statement": {
 			"patterns": [				
 				{
-					"match": "\\b((\\b(var|pub|let|def|with|new|mut|imut)\\s+)+)+([a-z0-9A-Z_]+)\\s*",
+					"match": "\\b((\\b(var|pub|let|def|with|new|mut|imut)\\s+)+)+([a-z0-9A-Z_]+)?({)?",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
 						},
 						"4":{
 							"name": "entity.name.variable.field.cs"
+						},
+						"5": {
+							"name": "punctuation.separator.coloncolon.ymir"
 						}
 					}
 				},{

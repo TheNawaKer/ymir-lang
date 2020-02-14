@@ -59,7 +59,7 @@
 		},
 		"lambda": {
 			"patterns": [{
-				"name": "keyword.operator.arrow.ymir",
+				"name": "keyword.other.this.ymir",
 				"match": "(->|=>)"
 			}]
 		},
@@ -72,15 +72,15 @@
 		"let-statement": {
 			"patterns": [				
 				{
-					"match": "\\b((\\b(var|pub|let|def|with|new|mut|imut)\\s+)+)+([a-z0-9A-Z_]+)?({)?",
+					"match": "\\b((\\b((var|pub|let|def|with|mut|imut)\\s)+|new)+)+([a-z0-9A-Z_]+)?({)?",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
 						},
-						"4":{
+						"5":{
 							"name": "entity.name.variable.field.cs"
 						},
-						"5": {
+						"6": {
 							"name": "punctuation.separator.coloncolon.ymir"
 						}
 					}

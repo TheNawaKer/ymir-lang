@@ -31,6 +31,9 @@
 		},
 		{
 			"include": "#self"
+		},
+		{
+			"include": "#literal"
 		}
 	],
 	"repository": {
@@ -99,6 +102,51 @@
 						}
 					}
 				}		
+			]
+		},
+		"literal": {
+			"patterns": [
+				{
+					"include": "#null-literal"
+				},
+				{
+					"include": "#numeric-literal"
+				},
+				{
+					"include": "#strings"
+				}
+			]
+		},
+		"null-literal": {
+			"name": "constant.language.null.ymir",
+			"match": "(?<!\\.)\\bnull\\b"
+		},
+		"numeric-literal": {
+			"patterns": [
+				{
+					"name": "constant.numeric.hex.cs",
+					"match": "\\b0(x|X)[0-9a-fA-F_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\\b"
+				},
+				{
+					"name": "constant.numeric.binary.cs",
+					"match": "\\b0(b|B)[01_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\\b"
+				},
+				{
+					"name": "constant.numeric.decimal.cs",
+					"match": "\\b([0-9_]+)?\\.[0-9_]+((e|E)[0-9]+)?(F|f|D|d|M|m)?\\b"
+				},
+				{
+					"name": "constant.numeric.decimal.cs",
+					"match": "\\b[0-9_]+(e|E)[0-9_]+(F|f|D|d|M|m)?\\b"
+				},
+				{
+					"name": "constant.numeric.decimal.cs",
+					"match": "\\b[0-9_]+(F|f|D|d|M|m)\\b"
+				},
+				{
+					"name": "constant.numeric.decimal.cs",
+					"match": "\\b[0-9_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\\b"
+				}
 			]
 		},
 		"type-left":{

@@ -9,6 +9,9 @@
 			"include": "#keywords"
 		},	
 		{
+			"include": "#def-statement"
+		},	
+		{
 			"include": "#let-statement"
 		},
 		{
@@ -73,21 +76,25 @@
 			}]
 		},
 		"let-statement": {
-			"patterns": [				
+			"patterns": [						
 				{
-					"match": "\\b((\\b((var|pub|let|def|with|mut|imut)\\s)+|new)+)+([a-z0-9A-Z_]+)?({)?",
+					"match": "\\b(.+?(?=def))|(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new)+)+?([a-z0-9A-Z_]+)?({)?)",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
 						},
-						"5":{
-							"name": "entity.name.variable.field.cs"
+						"3": {
+							"name": "keyword.other.var.ymir"
 						},
-						"6": {
+						"7":{
+							"name": "entity.name.variable.field.ymir"
+						},
+						"8": {
 							"name": "punctuation.separator.coloncolon.ymir"
 						}
 					}
-				},{
+				}				
+				,{
 					"match": "\\b(class)\\s+([a-z0-9A-Z:]+)\\s*",
 					"captures": {
 						"1": {
@@ -103,6 +110,17 @@
 					}
 				}		
 			]
+		},
+		"def-statement":{
+			"match": "(\\b(def)\\s)+([a-z0-9A-Z_]+)+",
+			"captures": {
+				"1": {
+					"name": "keyword.other.var.ymir"
+				},
+				"3":{
+					"name": "entity.name.function.ymir"
+				}
+			}
 		},
 		"literal": {
 			"patterns": [

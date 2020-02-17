@@ -140,12 +140,12 @@
 			}
 		},
 		"def-statement":{
-			"match": "((\\b(def)\\s)+([\\s\\S][^->]+)+)",
+			"match": "\\b(def)\\s([\\s\\S][^->]+)+",
 			"captures": {
-				"2": {
+				"1": {
 					"name": "keyword.other.var.ymir"
 				},
-				"4":{
+				"2":{
 					"patterns": [
 						{
 							"include": "#function-signature"
@@ -155,12 +155,12 @@
 			}
 		},
 		"function-signature":{
-			"match": "(\\b([a-z0-9A-Z]+)\\s*)+(\\(([\\s\\S]*)\\))",
+			"match": "\\b([a-z0-9A-Z]+)\\s*\\(([\\s\\S]*)\\)",
 			"captures": {
 				"1": {
 					"name": "entity.name.function.ymir"
 				},
-				"4":{
+				"2":{
 					"patterns": [
 						{
 							"include": "#function-signature-content"
@@ -189,7 +189,7 @@
 			}
 		},
 		"function-field":{
-			"match": "([\\s\\S]*):([\\s\\S]*)|((mut\\s+)?self)",
+			"match": "([\\s\\S][^:]*):([\\s\\S]*)|((mut\\s+)?self)",
 			"captures": {
 				"1": {
 					"patterns": [

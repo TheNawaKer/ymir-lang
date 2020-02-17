@@ -12,6 +12,9 @@
 			"include": "#keywords"
 		},	
 		{
+			"include": "#self-statement"
+		},	
+		{
 			"include": "#def-statement"
 		},	
 		{
@@ -121,14 +124,97 @@
 				}		
 			]
 		},
-		"def-statement":{
-			"match": "(\\b(def)\\s)+([a-z0-9A-Z_]+)+",
+		"self-statement":{
+			"match": "(\\bself\\s*)+(\\(([\\s\\S]*)\\))",
 			"captures": {
 				"1": {
 					"name": "keyword.other.var.ymir"
 				},
 				"3":{
+					"patterns": [
+						{
+							"include": "#function-signature-content"
+						}
+					]
+				}
+			}
+		},
+		"def-statement":{
+			"match": "((\\b(def)\\s)+([\\s\\S][^->]+)+)",
+			"captures": {
+				"2": {
+					"name": "keyword.other.var.ymir"
+				},
+				"4":{
+					"patterns": [
+						{
+							"include": "#function-signature"
+						}
+					]
+				}
+			}
+		},
+		"function-signature":{
+			"match": "(\\b([a-z0-9A-Z]+)\\s*)+(\\(([\\s\\S]*)\\))",
+			"captures": {
+				"1": {
 					"name": "entity.name.function.ymir"
+				},
+				"4":{
+					"patterns": [
+						{
+							"include": "#function-signature-content"
+						}
+					]
+				}
+			}
+		},
+		"function-signature-content":{
+			"match": "(([^,]*))(,([\\s\\S]*))*",
+			"captures": {
+				"1": {
+					"patterns": [
+						{
+							"include": "#function-field"
+						}
+					]
+				},
+				"4": {
+					"patterns": [
+						{
+							"include": "#function-signature-content"
+						}
+					]
+				}
+			}
+		},
+		"function-field":{
+			"match": "([\\s\\S]*):([\\s\\S]*)|((mut\\s+)?self)",
+			"captures": {
+				"1": {
+					"patterns": [
+						{
+							"include": "#mutability-modifier"
+						}
+					],
+					"name": "entity.name.variable.field.ymir"
+				},
+				"2": {
+					"patterns": [
+						{
+							"include": "#type"
+						}
+					]
+				},
+				"3": {
+					"patterns": [
+						{
+							"include": "#mutability-modifier"
+						},
+						{
+							"include": "#self"
+						}
+					]
 				}
 			}
 		},
@@ -215,8 +301,12 @@
 			]
 		},
 		"mutability-modifier": {
-			"name": "keyboard.other.var.ymir",
-			"match": "\\b(mut|imut)\\b"
+			"patterns": [				
+				{
+					"name": "keyword.other.var.ymir",
+					"match": "\\b(mut)\\b"
+				}
+			]
 		},
 		"type-builtin": {
 			"match": "\\b(i8|i16|i32|i64|u8|u16|u32|u64|isize|usize|f32|f64|s8|c8|bool)\\b",

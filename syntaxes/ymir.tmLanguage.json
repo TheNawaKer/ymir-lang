@@ -4,6 +4,9 @@
 	"patterns": [			
 		{
 			"include": "#begin-directive"
+		},
+		{
+			"include": "#other-keywords"
 		},	
 		{
 			"include": "#keywords"
@@ -63,6 +66,13 @@
 				"match": "\\b(if|while|for|return|loop|match|extern)\\b"
 			}]
 		},
+		"other-keywords": {
+			"patterns": [{
+				"name": "keyword.other.var.ymir",
+				"match": "\\b(alias|mut|ref)\\b"
+			}]
+		}
+		,
 		"lambda": {
 			"patterns": [{
 				"name": "keyword.other.this.ymir",
@@ -78,18 +88,18 @@
 		"let-statement": {
 			"patterns": [						
 				{
-					"match": "\\b(.+?(?=def))|(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new)+)+?([a-z0-9A-Z_]+)?({)?)",
+					"match": "\\b(.+?(?=def))|(?!(mut))(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new)+)+?([a-z0-9A-Z_]+)?({)?)",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
 						},
-						"3": {
+						"4": {
 							"name": "keyword.other.var.ymir"
 						},
-						"7":{
+						"8":{
 							"name": "entity.name.variable.field.ymir"
 						},
-						"8": {
+						"9": {
 							"name": "punctuation.separator.coloncolon.ymir"
 						}
 					}

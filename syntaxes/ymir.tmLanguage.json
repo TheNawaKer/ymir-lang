@@ -9,6 +9,9 @@
 			"include": "#struct-content"
 		},	
 		{
+			"include": "#enum-content"
+		},	
+		{
 			"include": "#struct-name"
 		},
 		{
@@ -78,7 +81,7 @@
 		"other-keywords": {
 			"patterns": [{
 				"name": "keyword.other.var.ymir",
-				"match": "\\b(alias|mut|dmut|ref|copy|dcopy|true|false|struct)\\b"
+				"match": "\\b(alias|mut|dmut|ref|copy|dcopy|true|false|struct|enum|sizeof)|@packed|@union"				
 			}]
 		}
 		,
@@ -114,12 +117,22 @@
 					}
 				}				
 				,{
-					"match": "\\b(class)\\s+([a-z0-9A-Z:]+)\\s*",
+					"match": "\\b(class)\\s+([a-z0-9A-Z:]+)\\s*((over)\\s+([a-z0-9A-Z:]+))?",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
 						},
 						"2":{
+							"patterns": [
+								{
+									"include": "#type-name"
+								}
+							]
+						},
+						"4": {
+							"name": "keyword.other.var.ymir"
+						},
+						"5":{
 							"patterns": [
 								{
 									"include": "#type-name"
@@ -464,15 +477,23 @@
 		"struct-content":{
 			"patterns": [
 				{
-					"match": "\\s*(\\|)([\\s\\S]*)",
+					"match": "\\s*(\\|)([\\s\\S][^:]*):([\\s\\S]*)",
 					"captures": {
 						"1":{
-							"name": "constant.numeric.decimal.cs"
+							"name": "keyword.other.enum.cs"
 						},
-						"2":{
+						"2": {
 							"patterns": [
 								{
-									"include": "#function-field"
+									"include": "#mutability-modifier"
+								}
+							],
+							"name": "entity.name.variable.field.ymir"
+						},
+						"3":{
+							"patterns": [
+								{
+									"include": "#type"
 								}
 							]
 						}
@@ -496,6 +517,30 @@
 							"patterns": [
 								{
 									"include": "#type-name"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"enum-content":{
+			"patterns": [
+				{
+					"match": "\\s*(\\|)([\\s\\S][^=]*)=([\\s\\S]*)",
+					"captures": {
+						"1":{
+							"name": "keyword.other.enum.cs"
+						},
+						"2": {							
+							"name": "entity.name.variable.field.ymir"
+						},
+						"3":{
+							"patterns": [
+								{
+									"include": "#strings"
+								},{
+									"include": "#numeric-literal"
 								}
 							]
 						}

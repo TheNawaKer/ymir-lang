@@ -31,6 +31,9 @@
 		},	
 		{
 			"include": "#let-statement"
+		},	
+		{
+			"include": "#impl-statement"
 		},
 		{
 			"include": "#strings"
@@ -159,7 +162,7 @@
 			}
 		},
 		"def-statement":{
-			"match": "\\b(def)\\s(([\\s\\S][^\\)]*)\\))",
+			"match": "\\b(def|over)\\s(([\\s\\S][^\\)]*)\\))",
 			"captures": {
 				"1": {
 					"name": "keyword.other.var.ymir"
@@ -547,6 +550,21 @@
 					}
 				}
 			]
+		},
+		"impl-statement":{
+			"match": "\\b(impl)\\s+([a-z0-9A-Z:]+)",
+			"captures": {
+				"1": {
+					"name": "keyword.other.var.ymir"
+				},
+				"2":{
+					"patterns": [
+						{
+							"include": "#type-name"
+						}
+					]
+				}
+			}
 		}
 	},
 	"scopeName": "source.yr"

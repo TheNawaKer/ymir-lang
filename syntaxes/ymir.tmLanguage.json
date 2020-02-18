@@ -4,6 +4,12 @@
 	"patterns": [			
 		{
 			"include": "#begin-directive"
+		},	
+		{
+			"include": "#struct-content"
+		},	
+		{
+			"include": "#struct-name"
 		},
 		{
 			"include": "#lambda"
@@ -28,9 +34,6 @@
 		},
 		{
 			"include": "#comment"
-		},
-		{
-			"include": "#expression-operators"
 		},
 		{
 			"include": "#type-builtin"
@@ -75,7 +78,7 @@
 		"other-keywords": {
 			"patterns": [{
 				"name": "keyword.other.var.ymir",
-				"match": "\\b(alias|mut|ref)\\b"
+				"match": "\\b(alias|mut|dmut|ref|copy|dcopy|true|false|struct)\\b"
 			}]
 		}
 		,
@@ -94,7 +97,7 @@
 		"let-statement": {
 			"patterns": [						
 				{
-					"match": "\\b(.+?(?=def))|(?!(mut))(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new)+)+?([a-z0-9A-Z_]+)?({)?)",
+					"match": "\\b(.+?(?=def))|(?!(mut))(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new|init)+)+?([a-z0-9A-Z_]+)?({)?)",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
@@ -307,7 +310,7 @@
 			"patterns": [				
 				{
 					"name": "keyword.other.var.ymir",
-					"match": "\\b(mut)\\b"
+					"match": "\\b(mut|dmut)\\b"
 				}
 			]
 		},
@@ -455,6 +458,48 @@
 				{
 					"name": "keyword.operator.null-coalescing.cs",
 					"match": "\\!is"
+				}
+			]
+		},
+		"struct-content":{
+			"patterns": [
+				{
+					"match": "\\s*(\\|)([\\s\\S]*)",
+					"captures": {
+						"1":{
+							"name": "constant.numeric.decimal.cs"
+						},
+						"2":{
+							"patterns": [
+								{
+									"include": "#function-field"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"struct-name":{
+			"patterns": [
+				{
+					"match": "\\s*(->)([\\s\\S]*)",
+					"captures": {
+						"1":{
+							"patterns": [
+								{
+									"include": "#lambda"
+								}
+							]
+						},
+						"2":{
+							"patterns": [
+								{
+									"include": "#type-name"
+								}
+							]
+						}
+					}
 				}
 			]
 		}

@@ -84,7 +84,7 @@
 		"other-keywords": {
 			"patterns": [{
 				"name": "keyword.other.var.ymir",
-				"match": "\\b(alias|mut|dmut|ref|copy|dcopy|true|false|struct|enum|sizeof)|@packed|@union"				
+				"match": "\\b(alias|mut|dmut|ref|copy|dcopy|true|false|struct|enum|sizeof|typeof)|@packed|@union"				
 			}]
 		}
 		,
@@ -103,7 +103,7 @@
 		"let-statement": {
 			"patterns": [						
 				{
-					"match": "\\b(.+?(?=def))|(?!(mut))(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new|init)+)+?([a-z0-9A-Z_]+)?({)?)",
+					"match": "\\b(.+?(?=def))|(?!(mut))(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new|init|typeid)+)+?([a-z0-9A-Z_]+)?({)?)",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
@@ -552,7 +552,7 @@
 			]
 		},
 		"impl-statement":{
-			"match": "\\b(impl)\\s+([a-z0-9A-Z:]+)",
+			"match": "\\b(impl|trait)\\s+([a-z0-9A-Z:]+)",
 			"captures": {
 				"1": {
 					"name": "keyword.other.var.ymir"

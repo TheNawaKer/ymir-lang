@@ -120,22 +120,25 @@
 					}
 				}				
 				,{
-					"match": "\\b(class)\\s+([a-z0-9A-Z:]+)\\s*((over)\\s+([a-z0-9A-Z:]+))?",
+					"match": "\\b(class)\\s+(@abstract\\s+)?([a-z0-9A-Z:]+)\\s*((over)\\s+([a-z0-9A-Z:]+))?",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
 						},
-						"2":{
+						"2": {
+							"name": "keyword.other.var.ymir"
+						},
+						"3":{
 							"patterns": [
 								{
 									"include": "#type-name"
 								}
 							]
 						},
-						"4": {
+						"5": {
 							"name": "keyword.other.var.ymir"
 						},
-						"5":{
+						"6":{
 							"patterns": [
 								{
 									"include": "#type-name"

@@ -4,7 +4,7 @@
 	"patterns": [			
 		{
 			"include": "#begin-directive"
-		},	
+		},			
 		{
 			"include": "#struct-content"
 		},	
@@ -78,7 +78,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.ymir",
-				"match": "\\b(if|while|for|return|loop|match|extern)\\b"
+				"match": "\\b(if|while|for|return|loop|match|extern|throw)\\b"
 			}]
 		},
 		"other-keywords": {
@@ -103,7 +103,7 @@
 		"let-statement": {
 			"patterns": [						
 				{
-					"match": "\\b(.+?(?=def))|(?!(mut))(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new|init|typeid)+)+?([a-z0-9A-Z_]+)?({)?)",
+					"match": "\\b(.+?(?=def|self))|(?!(mut))(\\b((\\b((var|pub|let|with|mut|imut)\\s)+|new|init|typeid)+)+?([a-z0-9A-Z_]+)?({)?)",
 					"captures": {
 						"1": {
 							"name": "keyword.other.var.ymir"
@@ -165,7 +165,48 @@
 			}
 		},
 		"def-statement":{
-			"match": "\\b(def|over)\\s(([\\s\\S][^\\)]*)\\))",
+			"patterns": [
+				{
+
+					"match": "\\b(def|over)\\s(([\\s\\S]*))",
+					"captures": {
+						"1": {
+							"name": "keyword.other.var.ymir"
+						},
+						"2":{
+							"patterns": [
+								{
+									"include": "#function-signature"
+								}
+							]
+						}
+					}
+				},
+				{
+					"match": "\\b(throws)\\s+([\\s\\S]+)",
+					"captures": {
+						"1": {
+							"name": "keyword.other.var.ymir"
+						},
+						"2":{
+							"patterns": [
+								{
+									"include": "#throw-list"
+								}
+							]
+						}
+					}
+				},{
+					"patterns": [
+						{
+							"include": "#throws"
+						}
+					]
+				}
+			]
+		},
+		"throws":{
+			"match": "\\b(throws)\\s+([\\s\\S]+)",
 			"captures": {
 				"1": {
 					"name": "keyword.other.var.ymir"
@@ -173,14 +214,33 @@
 				"2":{
 					"patterns": [
 						{
-							"include": "#function-signature"
+							"include": "#throw-list"
+						}
+					]
+				}
+			}
+		},
+		"throw-list":{
+			"match": "(([^,]*))(,([\\s\\S]*))*",
+			"captures": {
+				"1": {
+					"patterns": [
+						{
+							"include": "#type-name"
+						}
+					]
+				},
+				"4": {
+					"patterns": [
+						{
+							"include": "#throw-list"
 						}
 					]
 				}
 			}
 		},
 		"function-signature":{
-			"match": "\\b([a-z0-9A-Z]+)\\s*\\(([\\s\\S]*)\\)",
+			"match": "\\b([a-z0-9A-Z]+)\\s*\\(([\\s\\S]*)\\)(\\s*->[\\s\\S]*)?(\\s+throws[\\s\\S]+)?",
 			"captures": {
 				"1": {
 					"name": "entity.name.function.ymir"
@@ -189,6 +249,39 @@
 					"patterns": [
 						{
 							"include": "#function-signature-content"
+						}
+					]
+				},
+				"3":{
+					"patterns": [
+						{
+							"include": "#function-return"
+						}
+					]
+				},
+				"4":{
+					"patterns": [
+						{
+							"include": "#throws"
+						}
+					]
+				}
+			}
+		},
+		"function-return":{
+			"match": "\\s*(->)\\s*([\\s\\S]+)",
+			"captures": {
+				"1": {
+					"patterns": [
+						{
+							"include": "#lambda"
+						}
+					]
+				},
+				"2":{
+					"patterns": [
+						{
+							"include": "#type"
 						}
 					]
 				}
